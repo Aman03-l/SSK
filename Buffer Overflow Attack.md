@@ -402,7 +402,7 @@ Setelah ASLR diaktifkan (`randomize_va_space=2`), setiap koneksi ke server mengh
    ```
 
 #### Dokumentasi Output
-[Bukti: Foto 7a] – Output terminal: `*** stack smashing detected ***: terminated` / `Aborted (core dumped)`
+
 
 #### Analisis
 StackGuard adalah mekanisme keamanan compiler (GCC) yang menempatkan **canary value** — sebuah nilai acak (random) — di stack tepat di antara buffer lokal dan saved return address. Sebelum fungsi melakukan `return`, canary diperiksa: jika nilainya berubah (karena buffer overflow menimpa area tersebut), program langsung mendeteksi **stack smashing** dan memanggil `abort()` untuk menghentikan eksekusi. Saat kompilasi dengan `-fno-stack-protector`, mekanisme ini dinonaktifkan. Tanpa flag tersebut, StackGuard aktif secara default di GCC modern, sehingga eksploitasi buffer overflow konvensional tidak dapat menimpa return address tanpa terdeteksi.
