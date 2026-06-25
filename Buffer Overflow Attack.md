@@ -1,4 +1,4 @@
-# B2 – Buffer Overflow Attack Lab (Server Version)
+# R2 – Buffer Overflow Attack Lab (Server Version)
 
 ## Tujuan
 Tujuan dari praktikum ini adalah untuk memahami kerentanan **buffer overflow** pada program yang berjalan di server dan cara mengeksploitasinya untuk mendapatkan akses root. Lab ini mencakup topik: stack layout, shellcode injection, return address manipulation, reverse shell, serta evaluasi countermeasures (ASLR, StackGuard, Non-executable Stack).
