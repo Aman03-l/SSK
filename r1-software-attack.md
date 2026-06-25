@@ -33,8 +33,9 @@ Tujuan dari praktikum ini adalah untuk memahami bagaimana environment variable m
    ```
 
 ### Dokumentasi Output
-[Bukti: Foto 2]
-[Bukti: Foto 3]
+<img width="1920" height="902" alt="2" src="https://github.com/user-attachments/assets/2f055cfe-70c9-40d4-9ef9-33a61cee81dd" />
+<img width="1920" height="902" alt="3" src="https://github.com/user-attachments/assets/b7cff3e7-d4df-4753-bb93-889f60913f2a" />
+
 
 ### Analisis
 Environment variable dapat dibuat, diubah, dan dihapus oleh user, serta secara otomatis diwariskan ke program yang dijalankan dari shell. Karena sifatnya yang fleksibel dan dikontrol oleh user, environment variable dapat menjadi sumber kerentanan jika digunakan tanpa validasi dalam program.
@@ -60,7 +61,8 @@ Environment variable dapat dibuat, diubah, dan dihapus oleh user, serta secara o
    ```
 
 ### Dokumentasi Output
-[Bukti: Foto 4]
+<img width="1920" height="902" alt="4" src="https://github.com/user-attachments/assets/e724dbcf-bf57-40a2-b03b-7744e8009a3e" />
+
 
 ### Analisis
 Perintah `diff` tidak menampilkan perbedaan apa pun. `fork()` menciptakan child process yang merupakan exact duplicate dari parent, termasuk environment-nya. Child mewarisi copy environment variables yang identik dari parent process.
@@ -88,7 +90,7 @@ Perintah `diff` tidak menampilkan perbedaan apa pun. `fork()` menciptakan child 
    ```
 
 ### Dokumentasi Output
-[Bukti: Foto 5]
+<img width="1920" height="902" alt="5" src="https://github.com/user-attachments/assets/67046a6c-1752-4e38-a0ac-9acd4f7f61c3" />
 
 ### Analisis
 Ketika parameter ketiga `execve()` adalah `NULL`, program baru mendapat environment kosong. Environment tidak otomatis diwariskan - harus diberikan secara eksplisit melalui parameter ketiga (`environ`). Ini berbeda dari `fork()` yang otomatis mewarisi environment.
@@ -114,7 +116,8 @@ Ketika parameter ketiga `execve()` adalah `NULL`, program baru mendapat environm
    ```
 
 ### Dokumentasi Output
-[Bukti: Foto 6]
+<img width="1920" height="902" alt="6" src="https://github.com/user-attachments/assets/6110bd4e-1f9e-4f1e-a1e6-54537de19ae7" />
+
 
 ### Analisis
 `system()` menjalankan `/bin/sh -c command`, di mana shell secara otomatis mewarisi environment dari calling process. Program yang menggunakan `system()` sangat peka terhadap environment variables yang bisa dimanipulasi user, menjadikannya security risk pada program Set-UID.
@@ -143,8 +146,8 @@ Ketika parameter ketiga `execve()` adalah `NULL`, program baru mendapat environm
    ```
 
 ### Dokumentasi Output
-[Bukti: Foto 7]
-[Bukti: Foto 8]
+<img width="1920" height="902" alt="8" src="https://github.com/user-attachments/assets/217a6d82-233a-496e-8d14-6b120ca4a254" />
+
 
 ### Analisis
 Set-UID program tetap mewarisi sebagian besar environment variables dari user shell (seperti `ANY_NAME` dan `PATH`). Namun, sistem operasi (linker `ld.so`) secara otomatis menghapus environment variables yang berbahaya seperti `LD_LIBRARY_PATH` saat mendeteksi program berjalan dengan privilege Set-UID. Hal ini untuk mencegah serangan shared library injection.
@@ -184,8 +187,8 @@ Set-UID program tetap mewarisi sebagian besar environment variables dari user sh
    ```
 
 ### Dokumentasi Output
-[Bukti: Foto 9]
-[Bukti: Foto 10]
+<img width="1920" height="898" alt="10" src="https://github.com/user-attachments/assets/627a3aec-fc48-44e2-af29-bf3dcc3a77da" />
+
 
 ### Analisis
 Karena `system()` menggunakan shell yang mencari command via urutan `PATH`, program Set-UID yang menggunakan relative command names (seperti `ls`) dapat dimanipulasi. Attacker bisa membuat malicious executable di direktori dengan prioritas `PATH` tertinggi untuk mendapatkan root shell. Mitigasinya adalah selalu gunakan absolute paths (misal `/bin/ls`) di dalam privileged programs.
@@ -218,7 +221,8 @@ Karena `system()` menggunakan shell yang mencari command via urutan `PATH`, prog
    ```
 
 ### Dokumentasi Output
-[Bukti: Foto 11]
+<img width="1920" height="898" alt="11" src="https://github.com/user-attachments/assets/ee07adf9-c7d7-49f5-9cff-7759bc72bca4" />
+
 
 ### Analisis
 Pada program biasa, `LD_PRELOAD` berhasil membajak dynamic loader dan mengganti `sleep()` bawaan dengan fungsi buatan kita (mencetak "I am not sleeping!" tanpa jeda). Namun, jika program tersebut di-set menjadi Set-UID root, OS otomatis akan mengabaikan `LD_PRELOAD` dari normal user untuk mencegah eksekusi kode berbahaya pada proses ber-privilege tinggi.
@@ -249,7 +253,8 @@ Pada program biasa, `LD_PRELOAD` berhasil membajak dynamic loader dan mengganti 
    ```
 
 ### Dokumentasi Output
-[Bukti: Foto 12]
+<img width="1920" height="902" alt="12" src="https://github.com/user-attachments/assets/64279950-18a0-47bc-b9c4-c0dc51cd43c0" />
+
 
 ### Analisis
 Fungsi `system()` memanggil shell `/bin/sh` yang menafsirkan karakter pemisah `;`. Akibatnya, input `"test; rm /etc/zzz"` memicu command injection yang menghapus file sistem secara permanen. Sebaliknya, `execve()` memproses string tersebut murni sebagai satu nama argumen utuh tanpa intervensi shell parser, sehingga eksploitasi gagal dan file `/etc/zzz` tetap aman.
@@ -285,7 +290,8 @@ Fungsi `system()` memanggil shell `/bin/sh` yang menafsirkan karakter pemisah `;
    ```
 
 ### Dokumentasi Output
-[Bukti: Foto 1]
+<img width="1920" height="902" alt="1" src="https://github.com/user-attachments/assets/8adc8a01-5a6d-4425-b56e-30f061fc8725" />
+
 
 ### Analisis
 Pada percobaan ini, program berhasil dieksploitasi dan teks `"hack"` tertulis ke dalam `/etc/zzz`. Hal ini menunjukkan fenomena **Capability Leaking**. Walaupun program Set-UID root sudah menurunkan hak aksesnya menjadi normal user sebelum mengeksekusi shell baru, file descriptor (jalur akses file) yang terbuka saat berstatus root belum ditutup. Akibatnya, shell anak (child shell) mewarisi file descriptor tersebut dan mengizinkan user biasa menulis ke file sistem yang dilindungi.
